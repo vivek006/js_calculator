@@ -1,0 +1,17 @@
+.row{
+         width: 450px;
+    height: 640px;
+    align-items: center;
+    margin: 54px 0px 0px 208px;
+  }
+  .col-md-12{
+    margin-top: 10px;
+  }
+
+  .col-md-12 input {
+    margin-right:  10px;
+  }
+
+  .col-md-4 {
+    margin-right:  20px ;
+  }

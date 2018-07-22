@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script href ="style.css"></script>
+<script src="custom.js"></script>
+
+  <style type="text/css">
+  .row{
+  	     width: 450px;
+    height: 640px;
+    align-items: center;
+    margin: 54px 0px 0px 208px;
+  }
+  .col-md-12{
+  	margin-top: 10px;
+  }
+
+  .col-md-12 input {
+  	margin-right:  10px;
+  }
+
+  .col-md-4 {
+  	margin-right:  20px !important;
+  }
+  </style>
+
+</head>
+<body>
+	
+
+	<div class="row"> 
+		<div class="col-md-12">
+			<input type="text" name="input_value" class="bind_value col-md-8" value=""/>
+
+			<input type="hidden" name="input_value2" class="bind_value2 col-md-12" value=""/>
+
+		</div>
+		<div class="col-md-12">
+			<input type="text" class="btn btn-info input_enter col-md-2" value="1" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="2" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="3" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="+" />
+		</div>
+
+		<div class="col-md-12">
+			<input type="text" class="btn btn-info input_enter col-md-2" value="4" />  
+			<input type="text" class="btn btn-info input_enter col-md-2" value="5" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="6" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="-" />
+		</div>
+
+		<div class="col-md-12">
+
+			<input type="text" class="btn btn-info input_enter col-md-2" value="7" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="8" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="9" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="X" />
+
+		</div>
+
+		<div class="col-md-12">
+			<input type="button " class="btn btn-info input_enter col-md-4" value="0" />  
+			<input type="text" class="btn btn-info input_enter col-md-2" value="AC" />
+			<input type="text" class="btn btn-info input_enter col-md-2" value="=" />
+
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+	
+
+let input_1 = '';
+let input_2 = '';
+let operator = '';
+let total = '';
+
+jQuery(document).ready(function() {
+
+    jQuery('.input_enter').on('click', function(e) {
+
+    	if(jQuery(this).val() == 'AC'){
+    		input_1 = input_2 = operator = total = '';
+    		$('.bind_value').val('');
+    		$('.bind_value2').val('');
+    		return;
+    	}
+     	
+    	display_value(jQuery(this).val());
+    	flag_input(jQuery(this).val());
+
+    });
+
+    function display_value(num,refresh = 0) {
+    	var new_val = '';
+
+    	console.log('refresh : '+ refresh);
+
+    	if(refresh == 1){
+    		$('.bind_value').val(num);
+    		return;
+    	}
+
+    	if($('.bind_value').val()){
+    		new_val = $('.bind_value').val();
+    		new_val = new_val+num;
+
+    		$('.bind_value').val(new_val);
+    	}else{
+    		console.log(num);
+    		total = 0;
+    		$('.bind_value').val(num);
+    	}
+	}
+
+	function flag_input(num) {
+
+		var pre_val = $('.bind_value2').val() + num;
+
+		if (isNaN(num)){
+			if (input_1 === '') {
+				input_1 = parseFloat(pre_val);
+			} else {
+				input_2 = parseFloat(pre_val);
+			}
+			pre_val = '';
+			run_operator(num);
+		}
+
+		$('.bind_value2').val(pre_val);
+	}
+
+	function run_operator(op) {
+
+
+	if (operator === '') {
+		operator = op;
+		
+	} else {
+		switch (operator) {
+			case '+':
+				total = +input_1 + +input_2;
+			break;
+			case '-':
+				total = +input_1 - +input_2;
+			break;
+			case 'X':
+				total = +input_1 * +input_2;
+			break;
+			default:
+				
+			break;
+		}
+
+		input_1 = total;
+		input_2 = '';
+		operator = op;
+		if(op === '='){
+			operator = '';
+			display_value(total,1);
+		}
+	}
+}
+
+
+
+});
+
+
+
+	
+</script>
